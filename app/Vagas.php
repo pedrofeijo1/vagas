@@ -19,6 +19,6 @@ class Vagas extends Model
                 $query->where('localizacao', $localizacao);
             }
         });
-        return $vagas->orderBy('salarioDe', 'DESC')->paginate(15);
+        return $vagas->where('descricao', '!=', 'Campo Vazio')->orderBy('salarioDe', 'DESC');
     }
 }

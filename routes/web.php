@@ -11,15 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'VagasController@search')->name('search');
+Route::get('/list', 'VagasController@list')->name('list');
 
-Route::get('/proucurarVagas', 'VagasController@proucurarVagas')->name('proucurarVagas');
+//Route::get('/home', 'HomeController@index')->name('home');
+
+//Route::get('/proucurarVagas', 'VagasController@proucurarVagas')->name('proucurarVagas');
 
 //Route::get('/sql', 'SqlController@vagas')->name('vagas');
 

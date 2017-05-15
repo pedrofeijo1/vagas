@@ -15,7 +15,11 @@ class VagasController extends Controller
 
     public function list(Request $request)
     {
-        $vagas = Vagas::procurar($request->get('s'), $request->get('l'));
+        $vagas = Vagas::procurar(
+            $request->get('s'),
+            $request->get('l'),
+            ($request->has('ob') ? $request->get('ob') : "")
+        );
         $vagas = $vagas->paginate(($request->has('pp') ? $request->get('pp') : $this->perPage));
         return view('vagas.list')->with('vagas', $vagas);
     }

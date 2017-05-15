@@ -9,7 +9,7 @@ class Vagas extends Model
     protected $table = 'vagas';
     public $timestamps = false;
 
-    public static function procurar($funcao, $localizacao)
+    public static function procurar($funcao, $localizacao, $orderBy)
     {
         $vagas = self::where(function($query) use ($funcao, $localizacao){
             if (!empty($funcao)) {
@@ -19,6 +19,11 @@ class Vagas extends Model
                 $query->where('localizacao', $localizacao);
             }
         });
-        return $vagas->where('descricao', '!=', 'Campo Vazio')->orderBy('salarioDe', 'DESC');
+        if ($orderBy == "su") {
+            return $vagas->orderBy('salarioDe', 'DESC');
+        } elseif ($orderBy == "sd") {
+            return $vagas->where('salario', '!=', 'A combinar')->orderBy('salarioDe', 'ASC');
+        }
+        return $vagas;
     }
 }

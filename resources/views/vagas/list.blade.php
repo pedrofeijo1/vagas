@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                @if($vagas->total() > 0)
+                @if($vagas->total() > 0 && ($vagas->currentPage() < $vagas->lastPage()))
                     <div class="panel-heading">{{ number_format($vagas->total(), 0, ",", ".") }} vagas de emprego</div>
                     <div class="panel-footer">
                         Resultados {{ ($vagas->currentPage() * $vagas->perPage()) - ($vagas->perPage() - 1) }} -
@@ -17,21 +17,60 @@
                         de {{ number_format($vagas->total(), 0, ",", ".") }}
                         <span class="pull-right">
                         Mostrar
-                            <select name="pp" id="pp">
+                            <select name="pp" id="pp" class="filter">
                                 <option {{ (!app('request')->has('pp') || app('request')->input('pp') == 10 ? "selected" : "" ) }}
-                                        value="s={{ app('request')->input('s') }}&l={{ app('request')->input('l') }}&pp=10">10
+                                        value="{{ UrlController::getUrl('pp', 10) }}">10
                                 </option>
                                 <option {{ (app('request')->has('pp') && app('request')->input('pp') == 25 ? "selected" : "" ) }}
-                                        value="s={{ app('request')->input('s') }}&l={{ app('request')->input('l') }}&pp=25">25
+                                        value="{{ UrlController::getUrl('pp', 25) }}">25
                                 </option>
                                 <option {{ (app('request')->has('pp') && app('request')->input('pp') == 50 ? "selected" : "" ) }}
-                                        value="s={{ app('request')->input('s') }}&l={{ app('request')->input('l') }}&pp=50">50
+                                        value="{{ UrlController::getUrl('pp', 50) }}">50
                                 </option>
                             </select>
-                        por página
+                            por página e ordenar por:
+                            <select name="ob" id="ob" class="filter">
+                                <option {{ (!app('request')->has('ob') || app('request')->input('ob') == 'su' ? "selected" : "" ) }}
+                                        value="{{ UrlController::getUrl('ob', 'su') }}">Maior salario
+                                </option>
+                                <option {{ (app('request')->has('ob') && app('request')->input('ob') == 'sd' ? "selected" : "" ) }}
+                                        value="{{ UrlController::getUrl('ob', 'sd') }}">Menor salario
+                                </option>
+                            </select>
                         </span>
                     </div>
                     <div class="panel-body">
+                        <div id="filter-panel" class="collapse filter-panel">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" role="form" method="GET" action="{{ route('list') }}">
+                                        <div class="form-group">
+                                            <label class="filter-col" style="margin-right:0;" for="pref-search">Setor:</label>
+                                            <input type="text" class="form-control input-sm" id="pref-search" name="s">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="filter-col" style="margin-right:0;" for="pref-search">Localização:</label>
+                                            <input type="text" class="form-control input-sm" id="pref-search" name="l">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="filter-col" style="margin-right:0;" for="pref-search">Salario de:</label>
+                                            <input type="text" class="form-control input-sm" id="pref-search" name="sd">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="filter-col" style="margin-right:0;" for="pref-search">Salario ate:</label>
+                                            <input type="text" class="form-control input-sm" id="pref-search" name="da">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            Pesquisar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#filter-panel">
+                            Busca avançada
+                        </button>
                         @foreach($vagas as $vaga)
                         <a href="{{ $vaga->url }}" class="list-jobs">
                             <div class="all-jobs">
@@ -53,7 +92,7 @@
                                 </div>
 
                                 <div class="col-xs-12">
-                                    <p>{{ $vaga->descricao }}</p>
+                                <p>{{ ($vaga->descricao != "Campo Vazio" ? $vaga->descricao : "Descrição não fornecida pela empresa.") }}</p>
                                 </div>
 
                                 <div class="col-xs-12">
@@ -70,23 +109,9 @@
                         @endforeach
                     </div>
                     <div class="panel-footer">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="pagination">
+                            {{ $vagas->links('custom.pagination') }}
+                        </div>
                     </div>
                 @else
                     <div class="panel-body">

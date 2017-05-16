@@ -16,6 +16,8 @@ class UrlController extends Controller
         self::porPagina(($campo == "pp" ? $valor : ""));
         self::pagina(($campo == "page" ? $valor : ""));
         self::ordenar(($campo == "ob" ? $valor : ""));
+        self::salarioDe(($campo == "sd" ? $valor : ""));
+        self::SalarioAte(($campo == "sa" ? $valor : ""));
         return self::$url;
     }
 
@@ -61,6 +63,24 @@ class UrlController extends Controller
             self::$url .= (app('request')->has('ob') ? "&ob=" . app('request')->input('ob') : "");
         } else {
             self::$url .= "&ob=".$valor;
+        }
+    }
+
+    private static function salarioDe($valor = "")
+    {
+        if (empty($valor)) {
+            self::$url .= (app('request')->has('sd') ? "&sd=" . app('request')->input('sd') : "");
+        } else {
+            self::$url .= "&sd=".$valor;
+        }
+    }
+
+    private static function salarioAte($valor = "")
+    {
+        if (empty($valor)) {
+            self::$url .= (app('request')->has('sa') ? "&sa=" . app('request')->input('sa') : "");
+        } else {
+            self::$url .= "&sa=".$valor;
         }
     }
 }

@@ -21,7 +21,11 @@ class Vagas extends Model
                 $query->where('titulo', 'like', "%{$funcao}%");
             }
             if (!empty($localizacao)) {
-                $query->where('localizacao', '=', $localizacao);
+                if (array_search($localizacao, Municipios::getEstados())) {
+                    $query->where('estado', '=', array_search($localizacao, Municipios::getEstados()));
+                } else {
+                    $query->where('localizacao', '=', $localizacao);
+                }
             }
             if (!empty($salarioDe)) {
                 $query->where('salarioDe', '>=', $salarioDe);

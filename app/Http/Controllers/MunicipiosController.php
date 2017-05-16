@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class MunicipiosController extends Controller
 {
-    public function get(Request $request)
+
+
+    public function get()
     {
-//        return response()->json(Municipios::pluck('nome')->toArray());
-        return response()->json(Municipios::select('nome', DB::raw('CONCAT(nome, ", ", uf) AS nome'))->pluck('nome'));
+        $cidades = Municipios::select('nome', DB::raw('CONCAT(nome, ", ", uf) AS nome'))->pluck('nome');
+        return response()->json(array_merge(Municipios::getEstados(), $cidades->toArray()));
     }
 }

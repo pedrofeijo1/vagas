@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 {{ csrf_field() }}
-                @if($vagas->total() > 0 && ($vagas->currentPage() < $vagas->lastPage()))
+                @if($vagas->total() > 0 && ($vagas->currentPage() <= $vagas->lastPage()))
                     <div class="panel-heading">{{ number_format($vagas->total(), 0, ",", ".") }} vagas de emprego</div>
                     <div class="panel-footer">
                         Resultados {{ ($vagas->currentPage() * $vagas->perPage()) - ($vagas->perPage() - 1) }} -
@@ -47,19 +47,23 @@
                                     <form class="form-horizontal" role="form" method="GET" action="{{ route('list') }}">
                                         <div class="form-group">
                                             <label class="filter-col" style="margin-right:0;" for="pref-search">Setor:</label>
-                                            <input type="text" class="form-control input-sm" id="pref-search" name="s">
+                                            <input type="text" class="form-control input-sm" name="s" id="s"
+                                                   value="{{ (app('request')->has('s') ? app('request')->input('s') : '') }}">
                                         </div>
                                         <div class="form-group">
                                             <label class="filter-col" style="margin-right:0;" for="pref-search">Localização:</label>
-                                            <input type="text" class="form-control input-sm" id="pref-search" name="l">
+                                            <input type="text" class="form-control input-sm" name="l" id="l"
+                                                   value="{{ (app('request')->has('l') ? app('request')->input('l') : '') }}">
                                         </div>
                                         <div class="form-group">
                                             <label class="filter-col" style="margin-right:0;" for="pref-search">Salario de:</label>
-                                            <input type="text" class="form-control input-sm" id="pref-search" name="sd">
+                                            <input type="text" class="form-control input-sm" name="sd" id="sd"
+                                                   value="{{ (app('request')->has('sd') ? app('request')->input('sd') : '') }}">
                                         </div>
                                         <div class="form-group">
                                             <label class="filter-col" style="margin-right:0;" for="pref-search">Salario ate:</label>
-                                            <input type="text" class="form-control input-sm" id="pref-search" name="da">
+                                            <input type="text" class="form-control input-sm" name="sa" id="sa"
+                                            value="{{ (app('request')->has('sa') ? app('request')->input('sa') : '') }}">
                                         </div>
                                         <button type="submit" class="btn btn-primary">
                                             Pesquisar
@@ -70,7 +74,7 @@
                         </div>
 
                         <button type="button" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#filter-panel">
-                            Busca avançada
+                            Busca
                         </button>
                         @foreach($vagas as $vaga)
                         <a href="{{ $vaga->url }}" class="list-jobs">
@@ -80,12 +84,12 @@
                                         {{ $vaga->titulo }}
                                         @if (!Auth::guest())
                                             @if (Favoritos::usuarioTemVagaComoFavorito(Auth::id(), $vaga->id))
-                                                <button type="button" class="btn btn-danger pull-right add_favorites" id="vaga_{{ $vaga->id }}" data-id="{{ $vaga->id }}" data-hasfavorite="1">Favoritos</button>
+                                                <button type="button" class="btn btn-danger pull-right add_favorites" id="vaga_{{ $vaga->id }}" data-id="{{ $vaga->id }}" data-hasfavorite="1">Remover Favorita</button>
                                             @else
-                                                <button type="button" class="btn btn-primary pull-right add_favorites" id="vaga_{{ $vaga->id }}" data-id="{{ $vaga->id }}" data-hasfavorite="0">Favoritos</button>
+                                                <button type="button" class="btn btn-primary pull-right add_favorites" id="vaga_{{ $vaga->id }}" data-id="{{ $vaga->id }}" data-hasfavorite="0">Favoritar Vaga</button>
                                             @endif
                                         @else
-                                            <button type="button" title="Logue para adicionar aos favoritos!" id="vaga_{{ $vaga->id }}" data-hasfavorite="0" class="btn btn-primary pull-right add_favorites disabled">Favoritos</button>
+                                            <button type="button" title="Logue para adicionar aos favoritos!" id="vaga_{{ $vaga->id }}" data-hasfavorite="0" class="btn btn-primary pull-right add_favorites disabled">Favoritar Vaga</button>
                                         @endif
                                     </h2>
                                 </div>

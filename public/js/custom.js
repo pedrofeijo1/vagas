@@ -11,9 +11,10 @@ $('.filter').change(function() {
     window.location = $(this).val();
 });
 
-$('#query').typeahead({
-    local: ['alpha','allpha2','alpha3','bravo','charlie','delta','epsilon','gamma','zulu']
+$('#l').typeahead({
+    prefetch: '/cidades.json'
 });
+
 
 $('.tt-query').css('background-color','#fff');
 

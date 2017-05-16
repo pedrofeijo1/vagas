@@ -18,7 +18,10 @@
 Auth::routes();
 
 Route::get('/', 'VagasController@search')->name('search');
+
 Route::get('/list', 'VagasController@list')->name('list');
+
+Route::post('/favorite', 'FavoritosController@toggle')->name('toggle');
 
 //Route::get('/home', 'HomeController@index')->name('home');
 

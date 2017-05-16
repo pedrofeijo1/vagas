@@ -5,6 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
+                {{ csrf_field() }}
                 @if($vagas->total() > 0 && ($vagas->currentPage() < $vagas->lastPage()))
                     <div class="panel-heading">{{ number_format($vagas->total(), 0, ",", ".") }} vagas de emprego</div>
                     <div class="panel-footer">
@@ -75,7 +76,18 @@
                         <a href="{{ $vaga->url }}" class="list-jobs">
                             <div class="all-jobs">
                                 <div class="col-xs-12">
-                                    <h2>{{ $vaga->titulo }}</h2>
+                                    <h2>
+                                        {{ $vaga->titulo }}
+                                        @if (!Auth::guest())
+                                            @if (Favoritos::usuarioTemVagaComoFavorito(Auth::id(), $vaga->id))
+                                                <button type="button" class="btn btn-danger pull-right add_favorites" id="vaga_{{ $vaga->id }}" data-id="{{ $vaga->id }}" data-hasfavorite="1">Favoritos</button>
+                                            @else
+                                                <button type="button" class="btn btn-primary pull-right add_favorites" id="vaga_{{ $vaga->id }}" data-id="{{ $vaga->id }}" data-hasfavorite="0">Favoritos</button>
+                                            @endif
+                                        @else
+                                            <button type="button" title="Logue para adicionar aos favoritos!" id="vaga_{{ $vaga->id }}" data-hasfavorite="0" class="btn btn-primary pull-right add_favorites disabled">Favoritos</button>
+                                        @endif
+                                    </h2>
                                 </div>
                                 <div class="col-xs-12">
                                     <i class="fa fa-briefcase " aria-hidden="true" title="job_type">

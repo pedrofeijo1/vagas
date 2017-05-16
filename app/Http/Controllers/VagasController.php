@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Favoritos;
 use App\Vagas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VagasController extends Controller
 {
@@ -20,6 +22,7 @@ class VagasController extends Controller
             $request->get('l'),
             ($request->has('ob') ? $request->get('ob') : "")
         );
+
         $vagas = $vagas->paginate(($request->has('pp') ? $request->get('pp') : $this->perPage));
         return view('vagas.list')->with('vagas', $vagas);
     }

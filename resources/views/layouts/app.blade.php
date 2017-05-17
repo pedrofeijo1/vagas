@@ -71,6 +71,11 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('favoritos') }}">
+                                            Favoritos
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

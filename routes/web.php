@@ -25,6 +25,8 @@ Route::post('/favorite', 'FavoritosController@toggle')->name('toggle');
 
 Route::get('/cidades.json', 'MunicipiosController@get')->name('cidades');
 
+Route::get('/favoritos', 'FavoritosController@get')->name('favoritos');
+
 //Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/proucurarVagas', 'VagasController@proucurarVagas')->name('proucurarVagas');

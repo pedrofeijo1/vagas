@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Favoritos', 'id_usuario', 'id');
     }
+
+    public function vagas()
+    {
+        return $this->belongsToMany('App\Vagas', 'favoritos', 'id_usuario', 'id_vaga');
+    }
 }

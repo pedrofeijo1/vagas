@@ -31,11 +31,14 @@ $('.add_favorites').on('click', function () {
     if($('#vaga_' + id).data('hasfavorite')) {
         $(this).removeClass('btn-danger');
         $(this).addClass('btn-primary');
+        $(this).val('Adicionar Favorita');
         $('#vaga_' + id).data('hasfavorite', 0);
+        $('#vaga_' + id).text('Favoritar Vaga');
     } else {
         $(this).addClass('btn-danger');
         $(this).removeClass('btn-primary');
         $('#vaga_' + id).data('hasfavorite', 1);
+        $('#vaga_' + id).text('Remover Favorita');
     }
     return false;
 });

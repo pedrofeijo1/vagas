@@ -45,6 +45,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <form class="form-horizontal" role="form" method="GET" action="{{ route('list') }}">
+                                        <input type="hidden" class="form-control input-sm" name="ob" id="ob"
+                                               value="{{ (app('request')->has('ob') ? app('request')->input('ob') : '') }}">
                                         <div class="form-group">
                                             <label class="filter-col" style="margin-right:0;" for="pref-search">Setor:</label>
                                             <input type="text" class="form-control input-sm" name="s" id="s"

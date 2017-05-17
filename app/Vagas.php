@@ -14,6 +14,11 @@ class Vagas extends Model
         return $this->hasMany('App\Favoritos', 'id_vaga', 'id');
     }
 
+    public function usuarios()
+    {
+        return $this->belongsToMany('App\User', 'favoritos', 'id_vaga', 'id_usuario');
+    }
+
     public static function procurar($funcao, $localizacao, $orderBy, $salarioDe, $salarioAte)
     {
         $vagas = self::where(function($query) use ($funcao, $localizacao, $salarioDe, $salarioAte){
@@ -38,7 +43,7 @@ class Vagas extends Model
             }
         });
 
-        if ($orderBy == "su") {
+        if ($orderBy == "su" || empty($orderBy)) {
             return $vagas->orderBy('salarioDe', 'DESC');
         } elseif ($orderBy == "sd") {
             return $vagas->where('salario', '!=', 'A combinar')->orderBy('salarioDe', 'ASC');

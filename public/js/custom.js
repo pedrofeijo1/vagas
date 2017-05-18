@@ -21,7 +21,7 @@ $('.tt-query').css('background-color','#fff');
 $('.add_favorites').on('click', function () {
     var id = $(this).data('id');
     $.ajax({
-        url: "/favorite",
+        url: "/favoritar",
         method: "POST",
         data: {
             'id_vaga': id,

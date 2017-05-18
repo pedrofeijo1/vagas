@@ -19,9 +19,9 @@ Auth::routes();
 
 Route::get('/', 'VagasController@search')->name('search');
 
-Route::get('/list', 'VagasController@listar')->name('list');
+Route::get('/listar', 'VagasController@listar')->name('list');
 
-Route::post('/favorite', 'FavoritosController@toggle')->name('toggle');
+Route::post('/favoritar', 'FavoritosController@toggle')->name('toggle');
 
 Route::get('/cidades.json', 'MunicipiosController@get')->name('cidades');
 

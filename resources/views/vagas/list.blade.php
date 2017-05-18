@@ -48,12 +48,12 @@
                                         <input type="hidden" class="form-control input-sm" name="ob" id="ob"
                                                value="{{ (app('request')->has('ob') ? app('request')->input('ob') : '') }}">
                                         <div class="form-group">
-                                            <label class="filter-col" style="margin-right:0;" for="pref-search">Setor:</label>
+                                            <label class="filter-col" style="margin-right:0;" for="pref-search">O quê?</label>
                                             <input type="text" class="form-control input-sm" name="s" id="s"
                                                    value="{{ (app('request')->has('s') ? app('request')->input('s') : '') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label class="filter-col" style="margin-right:0;" for="pref-search">Localização:</label>
+                                            <label class="filter-col" style="margin-right:0;" for="pref-search">Onde?</label>
                                             <input type="text" class="form-control input-sm" name="l" id="l"
                                                    value="{{ (app('request')->has('l') ? app('request')->input('l') : '') }}">
                                         </div>

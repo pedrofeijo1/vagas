@@ -8,7 +8,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="GET" action="{{ route('list') }}">
                         <div class="form-group">
-                            <label for="setor" class="col-md-4 control-label">Setor</label>
+                            <label for="setor" class="col-md-4 control-label">O quê?</label>
 
                             <div class="col-md-6">
                                 <input id="setor" type="text" class="form-control" name="s" autofocus>
@@ -16,7 +16,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="localizacao" class="col-md-4 control-label">Localização</label>
+                            <label for="localizacao" class="col-md-4 control-label">Onde?</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" id="l" name="l">

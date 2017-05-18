@@ -13,7 +13,7 @@ class VagasController extends Controller
         return view('index');
     }
 
-    public function list(Request $request)
+    public function listar(Request $request)
     {
         $vagas = Vagas::procurar(
             $request->get('s'),

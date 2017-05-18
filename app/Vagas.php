@@ -22,8 +22,11 @@ class Vagas extends Model
     public static function procurar($funcao, $localizacao, $orderBy, $salarioDe, $salarioAte)
     {
         $vagas = self::where(function($query) use ($funcao, $localizacao, $salarioDe, $salarioAte){
-            if (!empty($funcao)) {
-                $query->where('titulo', 'like', "%{$funcao}%");
+            if (!empty($funcao) && $funcao != "Campo vazio") {
+                $query->where(function ($query) use ($funcao) {
+                    $query->where('titulo', 'like', "%{$funcao}%");
+                    $query->orWhere('descricao', 'like', "%{$funcao}%");
+                });
             }
             if (!empty($localizacao)) {
                 if (array_search($localizacao, Municipios::getEstados())) {

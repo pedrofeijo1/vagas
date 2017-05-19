@@ -2502,7 +2502,7 @@ var queryTokenizer = function (q) {
     var normalized = normalize(q);
     return Bloodhound.tokenizers.whitespace(normalized);
 };
-console.log(cidades);
+
 var nombres = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
     queryTokenizer: queryTokenizer,
@@ -2515,7 +2515,7 @@ var nombres = new Bloodhound({
             displayValue: name
         };
     })
-});;
+});
 
 $('#l').typeahead({
     minLength: 1,

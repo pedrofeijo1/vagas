@@ -9,36 +9,40 @@
                 @if($vagas->total() > 0 && ($vagas->currentPage() <= $vagas->lastPage()))
                     <div class="panel-heading">{{ number_format($vagas->total(), 0, ",", ".") }} vagas de emprego</div>
                     <div class="panel-footer">
-                        Resultados {{ ($vagas->currentPage() * $vagas->perPage()) - ($vagas->perPage() - 1) }} -
-                        @if($vagas->total() > 10)
-                            {{ $vagas->currentPage() * $vagas->perPage() }}
-                        @else
-                            {{ $vagas->total() }}
-                        @endif
-                        de {{ number_format($vagas->total(), 0, ",", ".") }}
-                        <span class="pull-right">
-                        Mostrar
-                            <select name="pp" id="pp" class="filter">
-                                <option {{ (!app('request')->has('pp') || app('request')->input('pp') == 10 ? "selected" : "" ) }}
-                                        value="{{ UrlController::getUrl('pp', 10) }}">10
-                                </option>
-                                <option {{ (app('request')->has('pp') && app('request')->input('pp') == 25 ? "selected" : "" ) }}
-                                        value="{{ UrlController::getUrl('pp', 25) }}">25
-                                </option>
-                                <option {{ (app('request')->has('pp') && app('request')->input('pp') == 50 ? "selected" : "" ) }}
-                                        value="{{ UrlController::getUrl('pp', 50) }}">50
-                                </option>
-                            </select>
-                            por página e ordenar por:
-                            <select name="ob" id="ob" class="filter">
-                                <option {{ (!app('request')->has('ob') || app('request')->input('ob') == 'su' ? "selected" : "" ) }}
-                                        value="{{ UrlController::getUrl('ob', 'su') }}">Maior salario
-                                </option>
-                                <option {{ (app('request')->has('ob') && app('request')->input('ob') == 'sd' ? "selected" : "" ) }}
-                                        value="{{ UrlController::getUrl('ob', 'sd') }}">Menor salario
-                                </option>
-                            </select>
-                        </span>
+                        <div class="form-group">
+                            Resultados {{ ($vagas->currentPage() * $vagas->perPage()) - ($vagas->perPage() - 1) }} -
+                            @if($vagas->total() > 10)
+                                {{ $vagas->currentPage() * $vagas->perPage() }}
+                            @else
+                                {{ $vagas->total() }}
+                            @endif
+                            de {{ number_format($vagas->total(), 0, ",", ".") }}
+                        </div>
+                        <div class="form-group">
+                            <span class="pull-right">
+                                Mostrar
+                                <select name="pp" id="pp" class="filter">
+                                    <option {{ (!app('request')->has('pp') || app('request')->input('pp') == 10 ? "selected" : "" ) }}
+                                            value="{{ UrlController::getUrl('pp', 10) }}">10
+                                    </option>
+                                    <option {{ (app('request')->has('pp') && app('request')->input('pp') == 25 ? "selected" : "" ) }}
+                                            value="{{ UrlController::getUrl('pp', 25) }}">25
+                                    </option>
+                                    <option {{ (app('request')->has('pp') && app('request')->input('pp') == 50 ? "selected" : "" ) }}
+                                            value="{{ UrlController::getUrl('pp', 50) }}">50
+                                    </option>
+                                </select>
+                                Ordenar
+                                <select name="ob" id="ob" class="filter">
+                                    <option {{ (!app('request')->has('ob') || app('request')->input('ob') == 'su' ? "selected" : "" ) }}
+                                            value="{{ UrlController::getUrl('ob', 'su') }}">&uarr; salario
+                                    </option>
+                                    <option {{ (app('request')->has('ob') && app('request')->input('ob') == 'sd' ? "selected" : "" ) }}
+                                            value="{{ UrlController::getUrl('ob', 'sd') }}">&darr; salario
+                                    </option>
+                                </select>
+                            </span>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div id="filter-panel" class="collapse filter-panel">
@@ -75,7 +79,7 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#filter-panel">
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
                             Busca
                         </button>
                         @foreach($vagas as $vaga)

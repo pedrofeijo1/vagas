@@ -19,7 +19,7 @@
                             <label for="localizacao" class="col-md-4 control-label">Onde?</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="l" name="l">
+                                <input type="text" class="form-control typeahead" id="l" name="l" />
                             </div>
                         </div>
 

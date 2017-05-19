@@ -10,7 +10,7 @@ class UrlController extends Controller
 
     public static function getUrl($campo = "", $valor = "")
     {
-        self::$url = "/list?";
+        self::$url = route('list');
         self::setor(($campo == "s" ? $valor : ""));
         self::localizacao(($campo == "l" ? $valor : ""));
         self::porPagina(($campo == "pp" ? $valor : ""));
@@ -24,9 +24,9 @@ class UrlController extends Controller
     private static function setor($valor = "")
     {
         if (empty($valor)) {
-            self::$url .= "s=".app('request')->input('s');
+            self::$url .= "?s=".app('request')->input('s');
         } else {
-            self::$url .= "s=".$valor;
+            self::$url .= "?s=".$valor;
         }
     }
 

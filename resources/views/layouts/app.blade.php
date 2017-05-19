@@ -89,6 +89,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://rawgit.com/twitter/typeahead.js/master/dist/bloodhound.min.js"></script>
     <script src="{{ asset('js/custom.js?'.time()) }}"></script>
 </body>
 </html>

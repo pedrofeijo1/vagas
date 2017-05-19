@@ -81,7 +81,7 @@
                             Busca
                         </button>
                         @foreach($vagas as $vaga)
-                        <a href="{{ $vaga->url }}" class="list-jobs">
+                        <a href="{{ route('redirect', ['url' => $vaga->url]) }}" class="list-jobs">
                             <div class="all-jobs">
                                 <div class="col-xs-12">
                                     <h2>

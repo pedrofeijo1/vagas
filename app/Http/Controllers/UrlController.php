@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class UrlController extends Controller
 {
@@ -82,5 +83,10 @@ class UrlController extends Controller
         } else {
             self::$url .= "&sa=".$valor;
         }
+    }
+
+    public function redirect(Request $request)
+    {
+        return Redirect::to($request->input('url'));
     }
 }

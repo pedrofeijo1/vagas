@@ -27,6 +27,8 @@ Route::get('/cidades.json', 'MunicipiosController@get')->name('cidades');
 
 Route::get('/favoritos', 'FavoritosController@get')->name('favoritos');
 
+Route::get('/redirecionar', 'UrlController@redirect')->name('redirect');
+
 //Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/proucurarVagas', 'VagasController@proucurarVagas')->name('proucurarVagas');

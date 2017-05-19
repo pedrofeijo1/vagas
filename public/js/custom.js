@@ -2455,75 +2455,75 @@ $('.filter').change(function() {
     window.location = $(this).val();
 });
 
-
-var charMap = {
-    "à": "a",
-    "á": "a",
-    "â": "a",
-    "ã": "a",
-    "é": "e",
-    "è": "e",
-    "ê": "e",
-    "ë": "e",
-    "É": "e",
-    "ï": "i",
-    "î": "i",
-    "ô": "o",
-    "ö": "o",
-    "û": "u",
-    "ù": "u",
-    "ü": "u",
-    "ñ": "n"
-};
-
-var cidades = (function () {
-    var json = null;
-    $.ajax({
-        'async': false,
-        'global': false,
-        'url': '/cidades.json',
-        'dataType': "json",
-        'success': function (data) {
-            json = data;
-        }
+function getval( callback ){
+    $.getJSON( "/cidades.json").done(function( data ) {
+        callback(data)
     });
-    return json;
-})();
+}
 
-var normalize = function (input) {
-    $.each(charMap, function (unnormalizedChar, normalizedChar) {
-        var regex = new RegExp(unnormalizedChar, 'gi');
-        input = input.replace(regex, normalizedChar);
+$(function () {
+    $(document).ready(function() {
+        getval( function ( cidades ) {
+
+            var charMap = {
+                "à": "a",
+                "á": "a",
+                "â": "a",
+                "ã": "a",
+                "é": "e",
+                "è": "e",
+                "ê": "e",
+                "ë": "e",
+                "É": "e",
+                "ï": "i",
+                "î": "i",
+                "ô": "o",
+                "ö": "o",
+                "û": "u",
+                "ù": "u",
+                "ü": "u",
+                "ñ": "n"
+            };
+
+            var normalize = function (input) {
+                $.each(charMap, function (unnormalizedChar, normalizedChar) {
+                    var regex = new RegExp(unnormalizedChar, 'gi');
+                    input = input.replace(regex, normalizedChar);
+                });
+                return input;
+            };
+
+            var queryTokenizer = function (q) {
+                var normalized = normalize(q);
+                return Bloodhound.tokenizers.whitespace(normalized);
+            };
+
+            var nombres = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: queryTokenizer,
+                local: $.map(cidades, function (name) {
+                    // Normalize the name - use this for searching
+                    var normalized = normalize(name);
+                    return {
+                        value: normalized,
+                        // Include the original name - use this for display purposes
+                        displayValue: name
+                    };
+                })
+            });
+
+            $('#l').typeahead({
+                minLength: 1,
+                hint: false,
+                highlight: true,
+            }, {
+                displayKey: 'displayValue',
+                source: nombres.ttAdapter()
+            });
+
+        } );
     });
-    return input;
-};
 
-var queryTokenizer = function (q) {
-    var normalized = normalize(q);
-    return Bloodhound.tokenizers.whitespace(normalized);
-};
-
-var nombres = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-    queryTokenizer: queryTokenizer,
-    local: $.map(cidades, function (name) {
-        // Normalize the name - use this for searching
-        var normalized = normalize(name);
-        return {
-            value: normalized,
-            // Include the original name - use this for display purposes
-            displayValue: name
-        };
-    })
-});
-
-$('#l').typeahead({
-    minLength: 1,
-    hint: false,
-    highlight: true,
-}, {
-    displayKey: 'displayValue',
-    source: nombres.ttAdapter()
 });
 
 $('.tt-query').css('background-color','#fff');

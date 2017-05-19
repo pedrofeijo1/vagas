@@ -9,14 +9,16 @@
                 @if($vagas->total() > 0 && ($vagas->currentPage() <= $vagas->lastPage()))
                     <div class="panel-heading">{{ number_format($vagas->total(), 0, ",", ".") }} vagas de emprego</div>
                     <div class="panel-footer">
-                        Resultados {{ ($vagas->currentPage() * $vagas->perPage()) - ($vagas->perPage() - 1) }} -
-                        @if($vagas->total() > 10)
-                            {{ $vagas->currentPage() * $vagas->perPage() }}
-                        @else
-                            {{ $vagas->total() }}
-                        @endif
-                        de {{ number_format($vagas->total(), 0, ",", ".") }}
-                        <span class="pull-right">
+                        <span>
+                            Resultados {{ ($vagas->currentPage() * $vagas->perPage()) - ($vagas->perPage() - 1) }} -
+                            @if($vagas->total() > 10)
+                                {{ $vagas->currentPage() * $vagas->perPage() }}
+                            @else
+                                {{ $vagas->total() }}
+                            @endif
+                            de {{ number_format($vagas->total(), 0, ",", ".") }}
+                        </span>
+                        <span class="inline-block">
                             Mostrar
                             <select name="pp" id="pp" class="filter">
                                 <option {{ (!app('request')->has('pp') || app('request')->input('pp') == 10 ? "selected" : "" ) }}
